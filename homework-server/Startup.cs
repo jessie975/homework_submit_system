@@ -24,6 +24,8 @@ namespace homework_server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(option=>option.AddPolicy("cors", policy => policy.AllowAnyHeader().
+            AllowAnyMethod().AllowCredentials().WithOrigins(new []{"http://127.0.0.1:8080"})));
             services.AddControllers();
         }
 
@@ -36,9 +38,9 @@ namespace homework_server
             }
 
             app.UseRouting();
-
+            app.UseCors("cors");
             app.UseAuthorization();
-
+            app.UseStaticFiles();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

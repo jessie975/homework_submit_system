@@ -1,0 +1,5 @@
+homework-server/obj/
+homework-server/bin/
+homework-server/wwwroot/UploadFiles/
+
+homework-webap/node_modules/
