@@ -1,13 +1,21 @@
 <template>
   <div id="app">
     <el-container>
-      <el-header class="header">作业提交系统</el-header>
-      <el-main class="body">
-        <submit></submit>
+      <el-header class="header">
+        作业提交系统 - {{ title }}
+      </el-header>
+      <el-main style="padding:0;">
+        <submit v-if="url === 'submit'" />
+        <job-list v-else-if="url === 'jobList'" />
+        <home v-else />
       </el-main>
       <el-footer class="footer">
-        <p class="footItem">ASP.NET课程设计</p>
-        <p class="footItem">计科3班-杨胜洁</p>
+        <p class="footItem">
+          ASP.NET课程设计
+        </p>
+        <p class="footItem">
+          计科3班-杨胜洁
+        </p>
       </el-footer>
     </el-container>
   </div>
@@ -15,11 +23,39 @@
 
 <script>
 import Submit from './components/Submit.vue'
+import JobList from './components/JobList.vue'
+import Home from './components/Home.vue'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    Submit
+    Submit,
+    Home,
+    JobList
+  },
+  data() {
+    return {
+      title: '首页',
+      url: ''
+    }
+  },
+  watch: {
+    $route: {
+      handler: function(to, from) {
+        if (to.path === '/submit') {
+          this.title = '提交作业'
+          this.url = 'submit'
+        } else if (to.path === '/jobList') {
+          this.title = '查看作业'
+          this.url = 'jobList'
+        } else {
+          this.title = '首页'
+          this.url = 'home'
+        }
+      },
+      immediate: true
+    }
+
   }
 }
 </script>
@@ -39,7 +75,8 @@ export default {
   font-size: 24px;
   font-weight: 700;
 }
-.body {
+.el-main{
+  min-height: 500px;
   background-color: #ecf4f9;
 }
 .footer {

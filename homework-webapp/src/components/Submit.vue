@@ -32,7 +32,7 @@
       </el-form-item>
 
       <el-form-item label="班级" prop="classes">
-        <el-input v-model="ruleForm.classes" placeholder="例如：计科B163" />
+        <el-input v-model="ruleForm.classes" placeholder="例如：计科B163班" />
       </el-form-item>
 
       <el-form-item label="上传作业附件">
@@ -41,7 +41,6 @@
           name="Files"
           drag
           action="http://127.0.0.1:5000/api/upload"
-          multiple
           :on-success="uploadSuccess"
         >
           <i class="el-icon-upload" />
@@ -55,9 +54,6 @@
         <el-button type="primary" class="submit" @click="submitForm('ruleForm')">
           确认提交
         </el-button>
-        <el-button @click="resetForm('ruleForm')">
-          重置
-        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -65,6 +61,7 @@
 
 <script>
 import { submit } from '../api/api'
+// import router from 'vue-router'
 
 export default {
   name: 'Submit',
@@ -75,8 +72,8 @@ export default {
         name: '杨胜洁',
         sid: '201607014332',
         grade: 2016,
-        classes: '计科B163',
-        files: []
+        classes: '计科B163班',
+        files: ''
       },
       rules: {
         task: [
@@ -116,29 +113,28 @@ export default {
           message: '请上传作业附件',
           type: 'warning'
         })
+      } else {
+        this.$refs[formName].validate(valid => {
+          if (valid) {
+            submit({
+              jobName: task,
+              name,
+              sid,
+              grade,
+              classes,
+              downLink: files
+            }).then(
+              this.$message({
+                message: '提交成功~',
+                type: 'success'
+              }),
+              this.$router.push('home')
+            )
+          } else {
+            return false
+          }
+        })
       }
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          submit({
-            jobName: task,
-            name,
-            sid,
-            grade,
-            classes,
-            downLink: files[0]
-          }).then(
-            this.$message({
-              message: '提交成功~',
-              type: 'success'
-            })
-          )
-        } else {
-          return false
-        }
-      })
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
     }
   }
 }

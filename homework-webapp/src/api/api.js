@@ -1,8 +1,8 @@
 import request from './request'
 
-export function getList(page, size) {
+export function getWorkList(page, size) {
   return request({
-    url: '/getList',
+    url: '/getWorkList',
     method: 'get',
     params: {
       page,

@@ -11,7 +11,11 @@ import {
   Select,
   Option,
   Upload,
-  Message
+  Message,
+  Table,
+  TableColumn,
+  Pagination,
+  Loading
 } from 'element-ui'
 
 Vue.use(Button)
@@ -25,5 +29,12 @@ Vue.use(Input)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Upload)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Pagination)
+
+Vue.use(Loading.directive)
+
+Vue.prototype.$loading = Loading.service
 
 Vue.prototype.$message = Message
