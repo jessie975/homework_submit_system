@@ -9,8 +9,8 @@
     >
       <el-form-item label="作业" prop="task">
         <el-select v-model="ruleForm.task" placeholder="请选择作业" class="selector">
-          <el-option label="ASP.NET课程设计" value="asp" />
-          <el-option label="2016毕业设计" value="taskEnd" />
+          <el-option label="ASP.NET课程设计" value="ASP.NET课程设计" />
+          <el-option label="2016毕业设计" value="2016毕业设计" />
         </el-select>
       </el-form-item>
 
@@ -122,7 +122,7 @@ export default {
               sid,
               grade,
               classes,
-              downLink: files
+              downLink: files[0]
             }).then(
               this.$message({
                 message: '提交成功~',

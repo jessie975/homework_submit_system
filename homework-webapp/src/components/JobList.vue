@@ -1,24 +1,5 @@
 <template>
   <div>
-    <div class="selector">
-      <div v-for="i in condition" :key="i.type" class="condition">
-        <span class="title">{{ i.label }}</span>
-        <el-select
-          v-model="selectValue"
-          placeholder="请选择"
-          class="option"
-          @visible-change="visibleChange(i.type)"
-        >
-          <el-option
-            v-for="item in optionType"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </div>
-    </div>
-
     <el-table
       v-loading="loading"
       class="table"
@@ -29,14 +10,20 @@
       <el-table-column
         prop="jobName"
         label="作业"
+        :filters="jobName"
+        :filter-method="filterHandler"
       />
       <el-table-column
         prop="grade"
         label="年级"
+        :filters="grade"
+        :filter-method="filterHandler"
       />
       <el-table-column
         prop="classes"
         label="班级"
+        :filters="classes"
+        :filter-method="filterHandler"
       />
       <el-table-column
         prop="name"
@@ -89,35 +76,24 @@ export default {
       total: 0,
       stripe: true,
       loading: true,
-      selectValue: [
-        { value1: '' },
-        { value2: '' },
-        { value3: '' }
-      ],
-      optionType: null,
-      condition: [
-        { label: '作业', type: 'jobName' },
-        { label: '年级', type: 'grade' },
-        { label: '班级', type: 'classes' }
-      ],
       jobName: [
-        { value: 'zy1', label: 'ASP.NET课程设计' },
-        { value: 'zy2', label: '2016毕业设计' }
+        { text: 'ASP.NET课程设计', value: 'ASP.NET课程设计' },
+        { text: '2016毕业设计', value: '2016毕业设计' }
       ],
       grade: [
-        { value: '2016', label: '2016' },
-        { value: '2017', label: '2017' },
-        { value: '2018', label: '2018' },
-        { value: '2019', label: '2019' }
+        { text: '2016', value: '2016' },
+        { text: '2017', value: '2017' },
+        { text: '2018', value: '2018' },
+        { text: '2019', value: '2019' }
       ],
       classes: [
-        { value: 'jk1', label: '计科B161' },
-        { value: 'jk2', label: '计科B162' },
-        { value: 'jk3', label: '计科B163' },
-        { value: 'rj1', label: '软件B161' },
-        { value: 'rj2', label: '软件B162' },
-        { value: 'wl1', label: '网络B161' },
-        { value: 'wl2', label: '网络B162' }
+        { text: '计科B161班', value: '计科B161班' },
+        { text: '计科B162班', value: '计科B162班' },
+        { text: '计科B163班', value: '计科B163班' },
+        { text: '软件B161班', value: '软件B161班' },
+        { text: '软件B162班', value: '软件B162班' },
+        { text: '网络B161班', value: '网络B161班' },
+        { text: '网络B162班', value: '网络B162班' }
       ]
     }
   },
@@ -129,8 +105,9 @@ export default {
     })
   },
   methods: {
-    visibleChange(e) {
-      this.optionType = this[e]
+    filterHandler(value, row, column) {
+      const property = column['property']
+      return row[property] === value
     },
     currentChange(val) {
       getWorkList(val, this.pageSize).then(res => {
