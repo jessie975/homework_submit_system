@@ -81,10 +81,10 @@ export default {
         { text: '2016毕业设计', value: '2016毕业设计' }
       ],
       grade: [
-        { text: '2016', value: '2016' },
-        { text: '2017', value: '2017' },
-        { text: '2018', value: '2018' },
-        { text: '2019', value: '2019' }
+        { text: 2016, value: 2016 },
+        { text: 2017, value: 2017 },
+        { text: 2018, value: 2018 },
+        { text: 2019, value: 2019 }
       ],
       classes: [
         { text: '计科B161班', value: '计科B161班' },

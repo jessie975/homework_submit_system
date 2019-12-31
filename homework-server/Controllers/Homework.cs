@@ -66,10 +66,12 @@ namespace homework_server.Controllers {
         if (!Directory.Exists (fileDir)) {
           Directory.CreateDirectory (fileDir);
         }
+        // 设置编码
+
         string filePath = fileDir + $@"/{fileName}";
         using (FileStream fs = System.IO.File.Create (filePath)) {
-          file.CopyTo (fs);
-          fs.Flush ();
+          file.CopyTo (fs); 
+          fs.Flush (); // 强制执行了一次把数据写出硬盘,避免程序突然中断文件写入失败
         }
         urls.Add(serverUrl + fileName);
       }

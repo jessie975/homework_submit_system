@@ -68,11 +68,11 @@ export default {
   data() {
     return {
       ruleForm: {
-        task: 'ASP.NET课程设计',
-        name: '杨胜洁',
-        sid: '201607014332',
-        grade: 2016,
-        classes: '计科B163班',
+        task: '',
+        name: '',
+        sid: '',
+        grade: null,
+        classes: '',
         files: ''
       },
       rules: {
